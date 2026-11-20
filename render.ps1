@@ -89,17 +89,19 @@ function Art([string]$kind,[single]$x,[single]$y,[single]$w,[single]$h){
   $g.ResetClip()
 }
 
-# Newspaper masthead: warm stock, ink-blue banner, red date block.
-Rect 0 0 $W 99 $ink
-Rect 25 12 67 69 $red
-Text 'NOV' 39 17 13 '#FFFFFF' 'Bold'
-Text '20' 36 31 31 '#FFFFFF' 'Bold' 'Georgia'
-Text 'FRI' 43 64 11 '#F9E5D8' 'Bold'
-Text 'THE DAY IN WORLD NEWS' 111 13 14 '#E7C36D' 'Bold'
-Text 'Friday 20 November 2026' 107 28 47 '#FFFFFF' 'Bold' 'Georgia'
-Text '8 REPORTS  •  3 CONTINENTS  •  SOURCED & DATE-CHECKED' 111 78 12 '#D4DCE0' 'Bold'
-Text 'NEWS CHECK  06:18 UTC  /  13:18 ICT' 773 17 12 '#D9C99E' 'Bold'
-Rect 0 96 $W 3 $gold
+# Masthead and region ribbon follow the agreed reference image.
+Rect 0 0 $W 80 $ink
+Rect 25 7 58 68 $red
+Text 'NOV' 36 11 12 '#FFFFFF' 'Bold'
+Text '20' 35 25 30 '#FFFFFF' 'Bold' 'Georgia'
+Text 'FRI' 40 58 10 '#F9E5D8' 'Bold'
+Text 'THE DAY IN WORLD NEWS' 101 7 12 '#E7C36D' 'Bold'
+Text 'Friday 20 November 2026' 99 18 41 '#FFFFFF' 'Bold' 'Georgia'
+Text '8 REPORTS  •  3 CONTINENTS  •  SOURCED & DATE-CHECKED' 102 63 11 '#D4DCE0' 'Bold'
+Text 'NEWS CHECK  06:18 UTC' 790 10 10 '#D9C99E' 'Bold'
+Rect 0 83 $W 21 $ink
+$ribbon=@(@{x=28;w=235;label='EUROPE  3';color=$blue},@{x=263;w=235;label='ASIA  4';color=$violet},@{x=498;w=235;label='AFRICA  1';color=$orange},@{x=733;w=263;label='8 REPORTS';color=$teal})
+foreach($r in $ribbon){Rect $r.x 84 $r.w 18 $r.color;Text $r.label ($r.x+8) 86 11 '#FFFFFF' 'Bold'}
 
 # Lead story: image left, summary right, matching approved layout.
 Rect 24 111 976 267 '#FFFFFF' '#AFA695' 1
@@ -126,9 +128,9 @@ $mid=@(
 foreach($m in $mid){
   Rect $m.x 391 316 223 '#FFFFFF' '#BDB5A5';Rect $m.x 391 316 24 $m.color;Text $m.tag ($m.x+10) 396 12 '#FFFFFF' 'Bold'
   Art $m.art ($m.x+10) 422 296 90
-  Text $m.title1 ($m.x+12) 518 18 $ink 'Bold' 'Georgia';Text $m.title2 ($m.x+12) 539 18 $ink 'Bold' 'Georgia'
-  Text $m.body1 ($m.x+12) 562 13 $muted;Text $m.body2 ($m.x+12) 578 13 $muted
-  Rect ($m.x+10) 597 296 12 '#EEE9DE';Text $m.src ($m.x+14) 597 10 $ink 'Bold'
+  Text $m.title1 ($m.x+12) 515 21 $ink 'Bold' 'Georgia';Text $m.title2 ($m.x+12) 539 21 $ink 'Bold' 'Georgia'
+  Text $m.body1 ($m.x+12) 563 14 $muted;Text $m.body2 ($m.x+12) 579 14 $muted
+  Rect ($m.x+10) 597 296 12 '#EEE9DE';Text $m.src ($m.x+14) 597 11 $ink 'Bold'
 }
 
 # Bottom left: a clean, proportioned equirectangular locator map with numbered report pins.
@@ -170,7 +172,7 @@ $small=@(
   @{y=630;color=$green;tag='05  UK  /  CYBERSECURITY';art='fridge';title='UK secures fridge networks';body='Tens of thousands shielded from hackers.';source='BBC  •  00:02 UTC'},
   @{y=716;color=$violet;tag='06  JAPAN  /  EARTHQUAKE';art='quake';title='M4.5 quake jolts Tokyo';body='No immediate damage; no tsunami warning.';source='REUTERS  •  03:01 UTC'},
   @{y=802;color=$gold;tag='07  MALAWI  /  FUEL';art='malawi';title='Fuel queues snarl daily life';body='Blantyre drivers wait hours amid shortages.';source='AL JAZEERA  •  20 NOV'},
-  @{y=888;color=$red;tag='08  CHINA–AUSTRALIA  /  DIPLOMACY';art='shenzhen';title='Xi says ties with Australia have turned around';body='Remarks followed a Friday meeting with Albanese.';source='REUTERS  •  20 NOV'}
+  @{y=888;color=$red;tag='08  CHINA–AUSTRALIA  /  DIPLOMACY';art='shenzhen';title='Xi: Australia ties “turned around”';body='Remarks followed a Friday meeting with Albanese.';source='REUTERS  •  20 NOV'}
 )
 
 # Check that every numbered pin has a dated source row and a clear evidence label.
@@ -198,16 +200,15 @@ if(-not (Validate-Edition $editionAudit $cardIds)){throw 'Edition validation fai
 foreach($s in $small){
   Rect 505 $s.y 495 78 '#FFFFFF' '#BDB5A5'
   Rect 505 $s.y 495 20 $s.color;Text $s.tag 515 ($s.y+4) 11 '#FFFFFF' 'Bold'
-  Art $s.art 515 ($s.y+25) 82 46
-  Text $s.title 607 ($s.y+25) 15 $ink 'Bold' 'Georgia'
-  Text $s.body 607 ($s.y+46) 11.5 $muted
-  Text $s.source 607 ($s.y+62) 9.5 $ink 'Bold'
+  Text $s.title 520 ($s.y+23) 21 $ink 'Bold' 'Georgia'
+  Text $s.body 520 ($s.y+47) 14 $muted
+  Text $s.source 520 ($s.y+63) 11 $ink 'Bold'
 }
 
-# restrained footer, no speculative headline strip
+# Restrained footer; the image already carries the eight legible story cards.
 DrawLine 24 987 1000 987 $ink 1
 Text 'DATE CHECK  /  EVENTS OR FIRST REPORTS: FRI 20 NOVEMBER 2026' 30 993 10 $ink 'Bold'
-Text 'EDITORIAL ILLUSTRATIONS  •  ATTRIBUTED CLAIMS LABELED  •  SOURCES IN SOURCES.MD' 521 993 10 $muted 'Bold'
+Text 'EDITORIAL ILLUSTRATIONS  •  CLAIMS ATTRIBUTED  •  SOURCES IN SOURCES.MD' 523 993 10 $muted 'Bold'
 
 $out=Join-Path $PSScriptRoot 'entry.png'
 $bmp.Save($out,[System.Drawing.Imaging.ImageFormat]::Png)
