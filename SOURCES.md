@@ -1,0 +1,15 @@
+# Sources and date checks
+
+Each item in `entry.png` names the outlet beside its summary. The links below are the supporting reports. Articles with a specific publication timestamp are dated in UTC; otherwise the date is the publication date shown by the outlet. Only reports dated 20 November 2026 are included. This is a developing-day snapshot; the entry does not treat future scheduled events or older reports as events of the 20th.
+
+| Card | What the image says | Source and date evidence | Status |
+|---|---|---|---|
+| Lead — Asia markets | Asian equities fell on Friday amid worries about AI and chip valuations; AP reports Hang Seng down nearly 2% and Shanghai down 1.7%. | [Associated Press](https://apnews.com/article/c4c3f4878b12989347f8a930ed813dad), published 20 Nov 2026, 03:17 UTC. | Market data reported by AP. |
+| Zimbabwe | HALO Trust says 4% of mined land remains and warns aid cuts threaten the 2030 clearance target. | [Agence France-Presse via Arab News](https://www.arabnews.com/world/target-for-land-mine-free-zimbabwe-by-2030-threatened-by-aid-cuts-3013010), dated 20 Nov 2026, 00:07. | **Attributed warning:** the risk assessment is HALO Trust's; it is not stated as an independently confirmed forecast. |
+| Brazil | Brazil's Justice Ministry declared Kapot Nhinore territory in the permanent possession of the Mebengokre and Yudja peoples. | [Al Jazeera, with AFP](https://www.aljazeera.com/news/2026/11/20/lula-visits-ailing-chief-raoni-as-brazil-recognises-indigenous-land), dated 20 Nov 2026. | Reported government action. |
+| United Kingdom | BBC reported a nationwide operation securing tens of thousands of commercial fridges and freezers from hackers. | [BBC News](https://www.bbc.com/news/articles/c6eq49zyx7p4o), published 20 Nov 2026, 00:02 UTC. | BBC-reported operation. |
+| Senegal | Four bodies were recovered after a migrant boat capsized; the search continued. | [Al Jazeera, citing Reuters](https://www.aljazeera.com/amp/news/2026/11/20/four-bodies-recovered-after-senegal-boat-capsizes-amid-migration-surge), dated 20 Nov 2026. | Death toll and rescue details attributed to named sources in the report. |
+| Malawi | Al Jazeera documented fuel shortages, long queues and disruption to daily life. | [Al Jazeera](https://www.aljazeera.com/news/2026/11/20/completely-messed-up-everything-malawis-fuel-crisis-causes-chaos), dated 20 Nov 2026. | **Reported conditions:** includes witness accounts; the image does not repeat unverified social-media footage. |
+| Clinical research | BBC reported early trial results for daraxonrasib, including tumor shrinkage in some patients. | [BBC News](https://www.bbc.com/news/articles/cqrmgjnzz9l0o), published 20 Nov 2026, 00:08 UTC. | **Early trial only:** not an approved treatment or a general cure claim. |
+| Currency | Reuters reported the dollar near a 19-month high as AI-trade jitters drove safe-haven demand. | [Reuters via Investing.com](https://za.investing.com/news/economy-news/dollar-near-19month-peak-as-ai-jitters-sap-risk-appetite-4587665), published 20 Nov 2026, 03:47 UTC. | Market report. |
+
