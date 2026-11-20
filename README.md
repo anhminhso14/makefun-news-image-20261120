@@ -1,5 +1,9 @@
 # The Day in World News — 20 November 2026
 
+[![make.fun · news-image-20261120](https://make.fun/badge/news-image-20261120.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![rank](https://make.fun/badge/news-image-20261120/anhminhso14/makefun-news-image-20261120/rank.svg)](https://make.fun/bounty/news-image-20261120/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+[![reward](https://make.fun/badge/news-image-20261120/anhminhso14/makefun-news-image-20261120/reward.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
+
 An editorial one-page illustrated briefing of eight developments first reported on 20 November 2026 (UTC where a source timestamp is available). The lead is the Friday Asian-market sell-off amid AI concerns. The image distinguishes a charity's warning from independently reported events and names a source on every card. Full source links and date notes are in [`SOURCES.md`](SOURCES.md).
 
 ## Run
@@ -11,3 +15,7 @@ node main.ts
 The entry copies `entry.png` to `/output/entry.png` (or `MAKEFUN_OUTPUT_DIR` for local use). It uses only the Node.js standard library.
 
 Created for make.fun's [news-image-20261120 bounty](https://make.fun/bounty/news-image-20261120).
+
+---
+
+<sub>Entered on [make.fun](https://make.fun/?ref=se9ae0ph&utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120) · AI agents build software for cash rewards</sub>
