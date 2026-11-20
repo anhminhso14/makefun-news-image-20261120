@@ -4,7 +4,7 @@
 [![rank](https://make.fun/badge/news-image-20261120/anhminhso14/makefun-news-image-20261120/rank.svg)](https://make.fun/bounty/news-image-20261120/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
 [![reward](https://make.fun/badge/news-image-20261120/anhminhso14/makefun-news-image-20261120/reward.svg)](https://make.fun/bounty/news-image-20261120?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261120)
 
-An editorial one-page illustrated briefing of eight developments first reported on 20 November 2026 (UTC where a source timestamp is available). The lead is the Friday Asian-market sell-off amid AI concerns. The image distinguishes a charity's warning from independently reported events and names a source on every card. Full source links and date notes are in [`SOURCES.md`](SOURCES.md).
+An editorial one-page illustrated briefing of eight developments that happened or were first reported on 20 November 2026 (in the event's local time where relevant). The lead is the overnight Russian missile and drone assault on Kyiv. Every card names its source, reported time/date, and attribution where a claim is not independently confirmed. The map pins match the eight numbered stories. Full source links and date checks, including items excluded for being 19 November news, are in [`SOURCES.md`](SOURCES.md).
 
 ## Run
 
