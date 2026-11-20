@@ -150,14 +150,17 @@ Polygon ([single[]](244,716,267,704,302,704,327,711,355,709,380,722,398,739,390,
 Polygon ([single[]](368,815,392,809,415,818,412,836,389,845,370,834)) '#C5D3C9' '#9BAFA8'
 # pins plotted using 0..360 longitude / -60..85 latitude transformed into the map rectangle
 function Pin([int]$n,[double]$lon,[double]$lat,[string]$color){$px=46+([double]($lon+180)/360)*421;$py=696+((84-$lat)/144)*198;Disc $px $py 8.5 $color '#FFFFFF';$s=('{0:d2}' -f $n);$f=MakeFont 8 'Arial' 'Bold';$br=MakeBrush '#FFFFFF';$sz=$g.MeasureString($s,$f);$g.DrawString($s,$f,$br,[single]($px-$sz.Width/2),[single]($py-$sz.Height/2-1));$br.Dispose();$f.Dispose()}
-Pin 1 30.5 50.45 $red
-Pin 2 121.47 31.23 $blue
-Pin 3 84.8 19.1 $orange
-Pin 4 30.7 36.9 $teal
-Pin 5 -2 54 $green
-Pin 6 139.7 35.7 $violet
-Pin 7 35 -15 $gold
-Pin 8 114.1 22.5 $red
+$editionAudit=@(
+  @{id=1;day='2026-11-20';source='Kyiv Independent';basis='officials attributed';lon=30.5;lat=50.45;color=$red},
+  @{id=2;day='2026-11-20';source='Associated Press';basis='market snapshot';lon=121.47;lat=31.23;color=$blue},
+  @{id=3;day='2026-11-20';source='Odisha TV / IMD';basis='agency attributed';lon=84.8;lat=19.1;color=$orange},
+  @{id=4;day='2026-11-20';source='Associated Press';basis='summit status';lon=30.7;lat=36.9;color=$teal},
+  @{id=5;day='2026-11-20';source='BBC';basis='reported operation';lon=-2;lat=54;color=$green},
+  @{id=6;day='2026-11-20';source='Reuters';basis='early report';lon=139.7;lat=35.7;color=$violet},
+  @{id=7;day='2026-11-20';source='Al Jazeera';basis='witness reporting';lon=35;lat=-15;color=$gold},
+  @{id=8;day='2026-11-20';source='Reuters';basis='attributed quote';lon=114.1;lat=22.5;color=$red}
+)
+foreach($story in $editionAudit){Pin $story.id $story.lon $story.lat $story.color}
 # panel annotations and legend reinforce that points locate the named reports, not casualty data
 Text '01 Kyiv' 43 922 12 $red 'Bold';Text '02 Asia markets' 126 922 12 $blue 'Bold';Text '03 Odisha' 255 922 12 $orange 'Bold';Text '04 Antalya' 356 922 12 $teal 'Bold'
 Text '05 UK' 43 946 12 $green 'Bold';Text '06 Tokyo' 126 946 12 $violet 'Bold';Text '07 Malawi' 255 946 12 $gold 'Bold';Text '08 Shenzhen' 356 946 12 $red 'Bold'
@@ -169,6 +172,29 @@ $small=@(
   @{y=802;color=$gold;tag='07  MALAWI  /  FUEL';art='malawi';title='Fuel queues snarl daily life';body='Blantyre drivers wait hours amid shortages.';source='AL JAZEERA  •  20 NOV'},
   @{y=888;color=$red;tag='08  CHINA–AUSTRALIA  /  DIPLOMACY';art='shenzhen';title='Xi says ties with Australia have turned around';body='Remarks followed a Friday meeting with Albanese.';source='REUTERS  •  20 NOV'}
 )
+
+# Check that every numbered pin has a dated source row and a clear evidence label.
+function Validate-Edition([object[]]$stories,[object[]]$cards){
+  if($stories.Count -ne 8){throw 'The map and source register must describe exactly eight stories.'}
+  $ids=@($stories | ForEach-Object {$_.id} | Sort-Object -Unique)
+  if(($ids -join ',') -ne '1,2,3,4,5,6,7,8'){throw 'Story ids must be unique and run from 01 to 08.'}
+  $sourceFile=Join-Path $PSScriptRoot 'SOURCES.md'
+  if(-not (Test-Path -LiteralPath $sourceFile)){throw 'SOURCES.md is required beside the image renderer.'}
+  $sourceText=Get-Content -LiteralPath $sourceFile -Raw -Encoding UTF8
+  foreach($story in $stories){
+    if($story.day -ne '2026-11-20'){throw "Story $($story.id) is outside the edition date."}
+    if([string]::IsNullOrWhiteSpace($story.source)){throw "Story $($story.id) has no named source."}
+    if([string]::IsNullOrWhiteSpace($story.basis)){throw "Story $($story.id) has no evidence attribution."}
+    if($story.lon -lt -180 -or $story.lon -gt 180 -or $story.lat -lt -60 -or $story.lat -gt 85){throw "Story $($story.id) has an invalid map coordinate."}
+    $storyKey='{0:d2}' -f $story.id
+    if($sourceText -notmatch "(?m)^\|\s*$storyKey\s*\|"){throw "Story $storyKey has no matching row in SOURCES.md."}
+    if($cards -notcontains ('{0:d2}' -f $story.id)){throw "Story $($story.id) has no matching numbered image card."}
+  }
+  return $true
+}
+$cardIds=@('01')+@($mid | ForEach-Object {$_.tag.Substring(0,2)})+@($small | ForEach-Object {$_.tag.Substring(0,2)})
+if(-not (Validate-Edition $editionAudit $cardIds)){throw 'Edition validation failed.'}
+
 foreach($s in $small){
   Rect 505 $s.y 495 78 '#FFFFFF' '#BDB5A5'
   Rect 505 $s.y 495 20 $s.color;Text $s.tag 515 ($s.y+4) 11 '#FFFFFF' 'Bold'
@@ -185,5 +211,16 @@ Text 'EDITORIAL ILLUSTRATIONS  •  ATTRIBUTED CLAIMS LABELED  •  SOURCES IN S
 
 $out=Join-Path $PSScriptRoot 'entry.png'
 $bmp.Save($out,[System.Drawing.Imaging.ImageFormat]::Png)
+$bmp.Dispose();$g.Dispose()
+# Verify the delivered artifact contract immediately after rendering.
+if(-not (Test-Path -LiteralPath $out)){throw 'Renderer did not create entry.png.'}
+$imageFile=[System.Drawing.Image]::FromFile($out)
+try {
+  if($imageFile.Width -ne 1024 -or $imageFile.Height -ne 1024){throw 'entry.png must be exactly 1024 by 1024 pixels.'}
+} finally {$imageFile.Dispose()}
+$imageBytes=(Get-Item -LiteralPath $out).Length
+if($imageBytes -gt 1048576){throw 'entry.png must not exceed one mebibyte.'}
+if($imageBytes -lt 4096){throw 'entry.png is unexpectedly small for the editorial layout.'}
+Write-Output "Verified entry.png: 1024x1024, $imageBytes bytes, eight dated/source-checked cards."
 $g.Dispose();$bmp.Dispose()
 Write-Output "Rendered $out"
